@@ -102,7 +102,6 @@ function validateLoginForm() {
     $.each(array, function () {
         json[this.name] = this.value || "";
     });
-
     fetch(url_login, {
         method: 'POST',
         body: JSON.stringify(json),

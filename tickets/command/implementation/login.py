@@ -6,7 +6,5 @@ class LoginCommand(ICommand):
         self.request = request
         
     def execute(self):
-        email = self.request.json['email']
-        password = self.request.json['password']
-        result = AuthService().login(email, password)
+        result = AuthService().login(self.request)
         return result

@@ -6,3 +6,6 @@ class UserRole(models.Model):
 
     def __repr__(self) -> str:
         return f"UserRole(id={self.id}, name={self.name})"
+    
+    class Meta:
+        db_table = 'user_role'

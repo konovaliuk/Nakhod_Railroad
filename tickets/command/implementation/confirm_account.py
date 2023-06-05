@@ -6,7 +6,7 @@ class ConfirmAccountCommand(ICommand):
         self.request = request
         
     def execute(self):
-        id = self.request.args.get('id')
-        token = self.request.args.get('token')
+        id = self.request.GET.get('id')
+        token = self.request.GET.get('token')
         result = AuthService().confirm(id, token)
         return result

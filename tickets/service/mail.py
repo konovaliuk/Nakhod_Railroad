@@ -1,5 +1,5 @@
-from flask import current_app, session, redirect, url_for
-from tickets.database.mysql_implementation.user import *
+
+from tickets.database.implementation.user import *
 import os
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import (Mail, Attachment, FileContent, FileName, FileType, Disposition, Asm, GroupId)

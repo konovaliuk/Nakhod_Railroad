@@ -1,9 +1,9 @@
-from flask import current_app, session, render_template, redirect
-from tickets.database.mysql_implementation.user import *
+
+from tickets.database.implementation.user import *
 
 class ProfileService:
-    def read(self):
-        if 'logged_in' in session and session['logged_in']:
+    def read(self, request):
+        if request.session.get('logged_in'):
             return render_template("profile.html")
         return redirect(url_for('index'))
     

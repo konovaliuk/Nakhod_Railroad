@@ -6,7 +6,7 @@ class VerifyOrderCommand(ICommand):
         self.request = request
         
     def execute(self):
-        id = self.request.args.get('id')
-        token = self.request.args.get('token')
+        id = self.request.GET.get('id')
+        token = self.request.GET.get('token')
         result = OrderService().verify(id, token)
         return result

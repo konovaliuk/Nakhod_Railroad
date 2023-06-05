@@ -1,7 +1,8 @@
 from tickets.database.interface.station import *
 from tickets.database.entity.station import *
+from django.db.models import Q
 
-class MysqlStation(IStation):
+class StationImpl(IStation):
     def read_all(self):
         return Station.objects.all()
 
@@ -12,5 +13,5 @@ class MysqlStation(IStation):
             return None
 
     def find(self, query):
-        return Station.objects.filter(name__startswith=query)
+        return Station.objects.filter(Q(name__istartswith=query))
 

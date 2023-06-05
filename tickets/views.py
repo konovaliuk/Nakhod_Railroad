@@ -16,40 +16,8 @@ load_dotenv()
 
 public_url = f"{settings.DOMAIN}"
 
-database_type = settings.DATABASE_TYPE
-
-database = DatabaseList().get_database(database_type)
-
-carriage_table = database.get_table('carriage')
-carriage_type_table = database.get_table('carriage_type')
-seat_table = database.get_table('seat')
-station_table = database.get_table('station')
-ticket_table = database.get_table('ticket')
-train_table = database.get_table('train')
-trip_table = database.get_table('trip')
-trip_station_table = database.get_table('trip_station')
-user_table = database.get_table('user')
-user_role_table = database.get_table('user_role')
-
-tables = {
-    'carriage': carriage_table,
-    'carriage_type': carriage_type_table,
-    'seat': seat_table,
-    'station': station_table,
-    'ticket': ticket_table,
-    'train': train_table,
-    'trip': trip_table,
-    'trip_station': trip_station_table,
-    'user': user_table,
-    'user_role': user_role_table
-}
-
-app = get_wsgi_application()
-
-app.secret_key = b'yb4No3!w2NX528'
-
 def index(request):
-    return render(request, "index.html")
+    return render(request, "index.html", context={'session': dict(request.session)})
 
 
 def stations(request):
@@ -57,13 +25,13 @@ def stations(request):
     return result
 
 
-@csrf_exempt
+
 def signup(request):
     result = SignupCommand(request).execute()
     return result
 
 
-@csrf_exempt
+
 def login(request):
     result = LoginCommand(request).execute()
     return result
@@ -74,13 +42,13 @@ def logout(request):
     return result
 
 
-@csrf_exempt
+
 def send_password_reset(request):
     result = SendPasswordResetCommand(request).execute()
     return result
 
 
-@csrf_exempt
+
 def reset_password(request):
     if request.method == 'GET':
         return render(request, "reset_password.html")
@@ -116,7 +84,7 @@ def seats(request):
     return result
 
 
-@csrf_exempt
+
 def orders(request):
     if request.method == 'GET':
         result = ReadOrdersCommand().execute()
@@ -127,7 +95,7 @@ def orders(request):
     return result
 
 
-@csrf_exempt
+
 def payment_completed(request):
     result = CompleteOrderCommand(request).execute()
     return result
@@ -149,8 +117,8 @@ def confirm_account(request):
     
 
 def handle_404(request, exception):
-    return redirect(reverse('index'))
+    return redirect('index')
 
 
 def handle_500(request):
-    return redirect(reverse('index'))
+    return redirect('index')

@@ -1,5 +1,5 @@
-from flask import current_app, session, redirect, render_template, url_for
-from tickets.database.mysql_implementation.user import *
+
+from tickets.database.implementation.user import *
 
 class AdminService:
     def read_users(self):
@@ -14,5 +14,6 @@ class AdminService:
                 'name': user.name,
                 'email': user.email,
                 'user_role_id': user.user_role_id
-            } for user in users]}
+            } for user in users],
+                'session': dict(request.session)}
         return render_template("admin.html", data=data)

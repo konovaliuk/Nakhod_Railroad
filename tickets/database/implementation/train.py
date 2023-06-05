@@ -2,7 +2,7 @@ from tickets.database.interface.train import *
 from tickets.database.entity.train import *
 from tickets.database.entity.trip import *
 
-class MysqlTrain(ITrain):
+class TrainImpl(ITrain):
     def read_all(self):
         return Train.objects.all()
 

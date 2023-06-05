@@ -1,7 +1,7 @@
 from tickets.database.interface.user_role import *
 from tickets.database.entity.user_role import *
 
-class MysqlUserRole(IUserRole):
+class UserRoleImpl(IUserRole):
     def read_all(self):
         return UserRole.objects.all()
 

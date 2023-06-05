@@ -6,6 +6,6 @@ class ResetPasswordCommand(ICommand):
         self.request = request
         
     def execute(self):
-        password = self.request.json['password']
+        password = self.request.body['password']
         result = AuthService().reset_password(password)
         return result

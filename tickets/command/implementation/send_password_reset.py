@@ -6,6 +6,6 @@ class SendPasswordResetCommand(ICommand):
         self.request = request
         
     def execute(self):
-        email = self.request.json['email']
+        email = self.request.body['email']
         result = AuthService().send_password_reset(email)
         return result

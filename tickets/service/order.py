@@ -1,15 +1,15 @@
-from flask import current_app, session, redirect, url_for, render_template, send_file, after_this_request
+
 from tickets.database.entity.ticket import *
 from tickets.database.entity.trip_station import *
 from tickets.database.entity.station import *
-from tickets.database.mysql_implementation.station import *
-from tickets.database.mysql_implementation.trip import *
-from tickets.database.mysql_implementation.train import *
-from tickets.database.mysql_implementation.trip_station import *
-from tickets.database.mysql_implementation.seat import *
-from tickets.database.mysql_implementation.carriage import *
-from tickets.database.mysql_implementation.carriage_type import *
-from tickets.database.mysql_implementation.ticket import *
+from tickets.database.implementation.station import *
+from tickets.database.implementation.trip import *
+from tickets.database.implementation.train import *
+from tickets.database.implementation.trip_station import *
+from tickets.database.implementation.seat import *
+from tickets.database.implementation.carriage import *
+from tickets.database.implementation.carriage_type import *
+from tickets.database.implementation.ticket import *
 import stripe
 import random
 import string
@@ -30,7 +30,7 @@ class OrderService:
         station_table = current_app.config['tables']['station']
         with Session(engine) as s:
             tickets = ticket_table.find(s, session['id'])
-            data = {'tickets': []}
+            data = {'tickets': [], 'session': dict(request.session)}
             for ticket in tickets:
                 ticket_info = ticket_table.info(s, ticket.id)
                 trip_station_start = trip_station_table.read(s, ticket_info[4])
@@ -161,7 +161,7 @@ class OrderService:
                         'time_arr': trip_station_end.time_arr,
                         'user_email': ticket_info[6],
                         'qrcode': qrcode
-                    }}
+                    }, 'session': dict(request.session)}
                 user_email = ticket_info[6]
                 user_name = ticket_info[7]
                 pdfkit.from_string(render_template('ticket.html', data=data), f'ticket-{ticket_id}.pdf', css='static/styles/ticket.css')
@@ -216,7 +216,7 @@ class OrderService:
                         'time_dep': trip_station_start.time_dep,
                         'time_arr': trip_station_end.time_arr,
                         'user_email': ticket_info[6]
-                    }}
+                    }, 'session': dict(request.session)}
         return render_template('verify.html', data=data)
     
     def create_qrcode(self, ticket_id, bypass_verification=False):

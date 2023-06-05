@@ -1,10 +1,16 @@
 {% extends 'base.html' %}
+{% load custom_filters %}
 {% block content %}
 <main class="container-fluid" id="search-content">
-    <h1>{{ data['station_start_name'] }} - {{ data['station_end_name'] }}</h1>
-    <h2>{{ data['depart_date'] }}</h2>
-    <h3>{{ data['trips']|length }} {{ "train" if data['trips']|length == 1 else "trains" }}</h3>
-    {% for trip in data['trips'] %}
+    <h1>{{ station_start_name }} - {{ station_end_name }}</h1>
+    <h2>{{ depart_date }}</h2>
+    <h3>{{ trips|length }} {% if trips|length == 1 %}
+        train
+        {% else %}
+        trains
+        {% endif %}
+    </h3>
+    {% for trip in trips %}
     <div class="card">
     <div class="card-body">
         <h5 class="card-title">{{ trip.train_name }}</h5>
@@ -13,38 +19,38 @@
                 <div class="row">
                     <div class="col-4">
                         <span class="bold">
-                            {{ trip['time_dep_pretty'] }}
+                            {{ trip.time_dep_pretty }}
                         </span>
                     </div>
                     <div class="col-4 justify-content-center d-flex">
                         <span>
-                            {{ trip['duration_pretty'] }}
+                            {{ trip.duration_pretty }}
                         </span>
                     </div>
                     <div class="col-4 justify-content-end d-flex">
                         <span class="bold">
-                        {{ trip['time_arr_pretty'] }}
+                        {{ trip.time_arr_pretty }}
                         </span>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-6">
-                        {{ data['station_start_name'] }}
+                        {{ station_start_name }}
                     </div>
                     <div class="col-6 justify-content-end d-flex">
-                        {{ data['station_end_name'] }}
+                        {{ station_end_name }}
                     </div>
                 </div>
             </div>
             <div class="col-12 col-lg-6">
                 <hr>
-                {% for carriage_seat in trip['carriage_seats'] %}
+                {% for carriage_seat in trip.carriage_seats %}
                 <div class="row align-items-center">
-                    <div class="col-4 col-sm-3">{{ carriage_seat['carriage_type'] }}</div>
-                    <div class="col-2 col-sm-1 justify-content-end d-flex bold">{{ carriage_seat['seat_quantity'] }}</div>
-                    <div class="col-6 col-sm-4 justify-content-end d-flex bold">₴ {{'%0.2f'| format(carriage_seat['seat_price']/100|float)}}</div>
+                    <div class="col-4 col-sm-3">{{ carriage_seat.carriage_type }}</div>
+                    <div class="col-2 col-sm-1 justify-content-end d-flex bold">{{ carriage_seat.seat_quantity }}</div>
+                    <div class="col-6 col-sm-4 justify-content-end d-flex bold">₴ {{ carriage_seat.seat_price|div:100|floatformat:2 }}</div>
                     <div class="col-12 col-sm-4">
-                        <a href="/seats?trip={{ trip.id }}&ctype={{ carriage_seat['carriage_id'] }}&from={{ data['station_start_id'] }}&to={{ data['station_end_id'] }}">
+                        <a href="/seats?trip={{ trip.id }}&ctype={{ carriage_seat.carriage_id }}&from={{ station_start_id }}&to={{ station_end_id }}">
                         <button type="submit" class="btn btn-primary w-100" id="btn-select">Select</button>
                         </a>
                     </div>

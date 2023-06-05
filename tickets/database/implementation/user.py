@@ -2,7 +2,7 @@ from tickets.database.interface.user import *
 from tickets.database.entity.user import *
 import bcrypt
 
-class MysqlUser(IUser):
+class UserImpl(IUser):
     def read_all(self):
         return User.objects.all()
 

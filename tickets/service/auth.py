@@ -1,31 +1,35 @@
-from flask import current_app, session, redirect, url_for
-from tickets.database.mysql_implementation.user import *
+import json
+from django.http import JsonResponse
+from tickets.database.implementation.user import *
 import random
 import os
 import string
 from tickets.service.mail import *
 
 class AuthService:
-    def login(self, email, password):
+    def login(self, request):
         try:
-            engine = current_app.config['engine']
-            user_table = current_app.config['tables']['user']
-            with Session(engine) as s:
-                user = user_table.find(s, email, password)
-                if user:
-                    if not user.confirmed_email:
-                        return {'msg': 'Please confirm your email before logging in'}, 401
-                    session['logged_in'] = True
-                    session['id'] = user.id
-                    session['email'] = user.email
-                    session['name'] = user.name
-                    session['user_role_id'] = user.user_role_id
-                    return {'msg': 'Success'}, 200
-                else:
-                    return {'msg': 'Incorrect email/password'}, 401
+            user_table = UserImpl()
+            email = json.loads(request.body)['email']
+            password = json.loads(request.body)['password']
+            user = user_table.find(email, password)
+            if user:
+                
+                if not user.confirmed_email:
+                    return JsonResponse({'msg': 'Please confirm your email before logging in'}, status=401)
+                
+                request.session['logged_in'] = True
+                request.session['id'] = user.id
+                request.session['email'] = user.email
+                request.session['name'] = user.name
+                request.session['user_role_id'] = user.user_role_id
+                
+                return JsonResponse({'msg': 'Success'}, status=200)
+            else:
+                return JsonResponse({'msg': 'Incorrect email/password'}, status=401)
         except Exception as e:
             print(e)
-        return {'msg': 'Server Error'}, 500
+        return JsonResponse({'msg': 'Server error'}, status=500)
     
     def signup(self, name, email, password):
         try:

@@ -1,7 +1,7 @@
 from tickets.database.interface.trip_station import *
 from tickets.database.entity.trip_station import *
 
-class MysqlTripStation(ITripStation):
+class TripStationImpl(ITripStation):
     def read_all(self):
         return TripStation.objects.all()
 

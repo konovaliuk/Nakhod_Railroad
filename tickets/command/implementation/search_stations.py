@@ -6,6 +6,5 @@ class SearchStationsCommand(ICommand):
         self.request = request
         
     def execute(self):
-        query = self.request.args.get('q')
-        result = SearchService().search_stations(query)
+        result = SearchService().search_stations(self.request)
         return result

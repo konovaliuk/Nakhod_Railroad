@@ -7,3 +7,6 @@ class CarriageType(models.Model):
 
     def __repr__(self) -> str:
         return f"CarriageType(id={self.id}, name={self.name}, price_mod={self.price_mod})"
+    
+    class Meta:
+        db_table = 'carriage_type'

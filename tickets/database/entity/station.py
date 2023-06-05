@@ -6,3 +6,6 @@ class Station(models.Model):
 
     def __repr__(self) -> str:
         return f"Station(id={self.id}, name={self.name})"
+    
+    class Meta:
+        db_table = 'station'

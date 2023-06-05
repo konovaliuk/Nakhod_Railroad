@@ -6,8 +6,8 @@ class CompleteOrderCommand(ICommand):
         self.request = request
         
     def execute(self):
-        payload = self.request.get_data(as_text=True)
+        payload = self.request.body
         sig_header = self.request.headers.get('Stripe-Signature')
-        checkout_session_id = self.request.json['data']['object']['id']
+        checkout_session_id = self.request.body['data']['object']['id']
         result = OrderService().complete(payload, sig_header, checkout_session_id)
         return result

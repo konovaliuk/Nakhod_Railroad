@@ -5,7 +5,7 @@ from tickets.database.entity.carriage import *
 from tickets.database.entity.seat import *
 from tickets.database.entity.user import *
 
-class MysqlTicket(ITicket):
+class TicketImpl(ITicket):
     def read_all(self):
         return Ticket.objects.all()
 
