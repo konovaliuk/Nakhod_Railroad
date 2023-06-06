@@ -3,7 +3,6 @@ from .train import *
 from .carriage_type import *
 
 class Carriage(models.Model):
-    id = models.IntegerField(primary_key=True)
     num = models.IntegerField()
     train = models.ForeignKey(Train, on_delete=models.CASCADE)
     carriage_type = models.ForeignKey(CarriageType, on_delete=models.CASCADE)

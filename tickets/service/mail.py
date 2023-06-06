@@ -1,4 +1,4 @@
-
+from django.http import JsonResponse
 from tickets.database.implementation.user import *
 import os
 from sendgrid import SendGridAPIClient
@@ -18,5 +18,5 @@ class MailService:
             sg = SendGridAPIClient(os.getenv('SENDGRID_API_KEY'))
             response = sg.send(message)
         except Exception as e:
-            return {'msg': 'server error'}, 500
-        return {'msg': 'success'}, 200
+            return JsonResponse({'msg': 'server error'}, status=500)
+        return JsonResponse({'msg': 'success'}, status=200)

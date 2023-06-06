@@ -2,7 +2,6 @@ from django.db import models
 from .carriage import *
 
 class Seat(models.Model):
-    id = models.IntegerField(primary_key=True)
     num = models.IntegerField()
     carriage = models.ForeignKey(Carriage, on_delete=models.CASCADE)
 

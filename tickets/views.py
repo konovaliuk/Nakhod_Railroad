@@ -38,7 +38,7 @@ def login(request):
 
 
 def logout(request):
-    result = LogoutCommand().execute()
+    result = LogoutCommand(request).execute()
     return result
 
 
@@ -61,7 +61,7 @@ def reset_password(request):
 
 def profile(request):
     if request.method == 'GET':
-        result = ReadProfileCommand().execute()
+        result = ReadProfileCommand(request).execute()
         
     if request.method == 'PATCH':
         result = UpdateProfileCommand(request).execute()
@@ -87,7 +87,7 @@ def seats(request):
 
 def orders(request):
     if request.method == 'GET':
-        result = ReadOrdersCommand().execute()
+        result = ReadOrdersCommand(request).execute()
 
     if request.method == 'POST':
         result = CreateOrderCommand(request).execute()

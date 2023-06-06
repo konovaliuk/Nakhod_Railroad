@@ -1,5 +1,7 @@
 import json
 from django.http import JsonResponse
+from django.urls import reverse
+from django.shortcuts import render, redirect
 from tickets.database.implementation.user import *
 import random
 import os
@@ -86,9 +88,9 @@ class AuthService:
         return redirect(url_for('index'))
 
 
-    def logout(self):
-        session.clear()
-        return redirect(url_for('index'))
+    def logout(self, request):
+        request.session.flush()
+        return redirect(reverse('index'))
     
     
     def send_password_reset(self, email):

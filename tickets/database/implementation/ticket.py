@@ -16,14 +16,13 @@ class TicketImpl(ITicket):
             return None
 
     def create(self, ticket):
-        new_ticket = Ticket(
+        new_ticket = Ticket.objects.create(
             user_id=ticket.user_id,
             seat_id=ticket.seat_id,
             trip_station_start_id=ticket.trip_station_start_id,
             trip_station_end_id=ticket.trip_station_end_id,
             token=ticket.token
         )
-        new_ticket.save()
         return new_ticket.id
 
     def find(self, user_id):

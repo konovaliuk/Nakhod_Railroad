@@ -4,7 +4,6 @@ from .seat import *
 from .trip_station import *
 
 class Ticket(models.Model):
-    id = models.IntegerField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     seat = models.ForeignKey(Seat, on_delete=models.CASCADE)
     trip_station_start = models.ForeignKey(TripStation, on_delete=models.CASCADE, related_name='trip_station_start')

@@ -1,11 +1,12 @@
-
+from django.shortcuts import render, redirect
+from django.urls import reverse
 from tickets.database.implementation.user import *
 
 class ProfileService:
     def read(self, request):
         if request.session.get('logged_in'):
-            return render_template("profile.html")
-        return redirect(url_for('index'))
+            return render(request, "profile.html", context={'session': request.session})
+        return redirect(reverse('index'))
     
     def update(self, fields, password=None):
         if not 'logged_in' in session or not session['logged_in']:

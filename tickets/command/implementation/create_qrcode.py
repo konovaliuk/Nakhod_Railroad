@@ -7,5 +7,5 @@ class CreateQrcodeCommand(ICommand):
         
     def execute(self):
         ticket_id = self.request.GET.get('ticket-id')
-        result = OrderService().create_qrcode(ticket_id)
+        result = OrderService().create_qrcode(self.request, ticket_id)
         return result

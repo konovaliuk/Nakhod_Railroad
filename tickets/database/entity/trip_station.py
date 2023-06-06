@@ -3,7 +3,6 @@ from .trip import *
 from .station import *
 
 class TripStation(models.Model):
-    id = models.IntegerField(primary_key=True)
     trip = models.ForeignKey(Trip, on_delete=models.CASCADE)
     station = models.ForeignKey(Station, on_delete=models.CASCADE)
     num = models.IntegerField()

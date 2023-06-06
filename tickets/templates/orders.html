@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
 <main class="container-fluid" id="admin-content">
 <h1>My orders</h1>
@@ -12,12 +13,12 @@
     </tr>
   </thead>
   <tbody>
-    {% for ticket in data['tickets'] %}
+    {% for ticket in tickets %}
     <tr>
-      <th scope="row">{{ ticket['id'] }}</th>
-      <td>{{ ticket['station_start_name'] }} - {{ ticket['station_end_name'] }}</td>
-      <td>{{ ticket['time_dep'] }}</td>
-      <td><a data-ticket-id="{{ ticket['id'] }}" href="#" class="btn-modal-qrcode" data-bs-toggle="modal" data-bs-target="#modal-qrcode"><img src="{{ url_for('static',filename='resources/qrcode.png') }}" class="navbar-brand" id="logo"></a></td>
+      <th scope="row">{{ ticket.id }}</th>
+      <td>{{ ticket.station_start_name }} - {{ ticket.station_end_name }}</td>
+      <td>{{ ticket.time_dep }}</td>
+      <td><a data-ticket-id="{{ ticket.id }}" href="#" class="btn-modal-qrcode" data-bs-toggle="modal" data-bs-target="#modal-qrcode"><img src="{% static 'resources/qrcode.png' %}" class="navbar-brand" id="logo"></a></td>
     </tr>
     {% endfor %}
   </tbody>
@@ -27,7 +28,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
             <div class="modal-body">
-                <img src="{{ url_for('static',filename='resources/qrcode.png') }}" id="img-qrcode" alt="">
+                <img src="{% static 'resources/qrcode.png' %}" id="img-qrcode" alt="">
             </div>
             </div>
         </div>

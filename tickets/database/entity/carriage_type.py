@@ -1,7 +1,6 @@
 from django.db import models
 
 class CarriageType(models.Model):
-    id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=60)
     price_mod = models.IntegerField()
 
